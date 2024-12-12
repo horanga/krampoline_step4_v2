@@ -21,6 +21,8 @@ spec:
          env:
            - name: TZ
              value: Asia/Seoul
+		   - name: DATABASE_URL
+             value: jdbc:mariadb://mariadb:3306/krampoline
            - name: SPRING_CLOUD_GCP_CREDENTIALS_LOCATION
              value: classpath:stt.json
            - name: SPRING_AI_ANTHROPIC_API_KEY
