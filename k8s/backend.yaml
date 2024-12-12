@@ -1,54 +1,60 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+ name: backend
 spec:
-  selector:
-    matchLabels:
-      app: backend
-  template:
-    metadata:
-      labels:
-        app: backend
-    spec:
-      containers:
-        - name: backend
-          image: krmp-d2hub-idock.9rum.cc/dev-test/repo_0a8b009c4427
-          volumeMounts:
-            - name: stt-credentials
-              mountPath: /app/src/main/resources/stt.json
-              subPath: stt.json
-          env:
-            - name: TZ
-              value: Asia/Seoul
-            - name: DATABASE_URL
-              value: jdbc:mariadb://mariadb:3306/krampoline
-            - name: SPRING_CLOUD_GCP_CREDENTIALS_LOCATION
-              value: classpath:stt.json
-            - name: SPRING_AI_ANTHROPIC_API_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: api-credentials
-                  key: anthropic-key
-          resources:
-            requests:
-              memory: 1Gi
-          readinessProbe:
-            httpGet:
-              path: /api/test
-              port: 8080
-      volumes:
-        - name: stt-credentials
-          secret:
-            secretName: stt-credentials
+ selector:
+   matchLabels:
+     app: backend
+ template:
+   metadata:
+     labels:
+       app: backend
+   spec:
+     containers:
+       - name: backend
+         image: krmp-d2hub-idock.9rum.cc/dev-test/repo_0a8b009c4427
+         volumeMounts:
+           - name: stt-credentials
+             mountPath: /app/src/main/resources/stt.json
+             subPath: stt.json
+         env:
+           - name: TZ
+             value: Asia/Seoul
+           - name: SPRING_DATASOURCE_URL
+             value: jdbc:mariadb://mariadb:3306/krampoline
+           - name: SPRING_DATASOURCE_USERNAME
+             value: root
+           - name: SPRING_DATASOURCE_PASSWORD
+             value: root
+           - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+             value: org.mariadb.jdbc.Driver
+           - name: SPRING_CLOUD_GCP_CREDENTIALS_LOCATION
+             value: classpath:stt.json
+           - name: SPRING_AI_ANTHROPIC_API_KEY
+             valueFrom:
+               secretKeyRef:
+                 name: api-credentials
+                 key: anthropic-key
+         resources:
+           requests:
+             memory: 1Gi
+         readinessProbe:
+           httpGet:
+             path: /api/test
+             port: 8080
+     volumes:
+       - name: stt-credentials
+         secret:
+           secretName: stt-credentials
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: backend
+ name: backend
 spec:
-  selector:
-    app: backend
-  ports:
-    - port: 8080
-      targetPort: 8080
+ selector:
+   app: backend
+ ports:
+   - port: 8080
+     targetPort: 8080
