@@ -21,14 +21,6 @@ spec:
          env:
            - name: TZ
              value: Asia/Seoul
-           - name: SPRING_DATASOURCE_URL
-             value: jdbc:mariadb://mariadb:3306/krampoline
-           - name: SPRING_DATASOURCE_USERNAME
-             value: root
-           - name: SPRING_DATASOURCE_PASSWORD
-             value: root
-           - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
-             value: org.mariadb.jdbc.Driver
            - name: SPRING_CLOUD_GCP_CREDENTIALS_LOCATION
              value: classpath:stt.json
            - name: SPRING_AI_ANTHROPIC_API_KEY
