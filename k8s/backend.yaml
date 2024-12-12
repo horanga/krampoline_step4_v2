@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,18 +13,17 @@ spec:
     spec:
       containers:
         - name: backend
-          # 여러분의 backend image 주소를 입력해주세요.
           image: krmp-d2hub-idock.9rum.cc/dev-test/repo_0a8b009c4427
-		  volumeMounts:
+          volumeMounts:
             - name: stt-credentials
-              mountPath: /app/src/main/resources/stt.json  # 애플리케이션이 실제로 찾는 경로
+              mountPath: /app/src/main/resources/stt.json
               subPath: stt.json
           env:
             - name: TZ
               value: Asia/Seoul
             - name: SPRING_DATASOURCE_URL
               value: jdbc:mariadb://mariadb:3306/krampoline
-			- name: SPRING_DATASOURCE_USERNAME
+            - name: SPRING_DATASOURCE_USERNAME
               value: root
             - name: SPRING_DATASOURCE_PASSWORD
               value: root
